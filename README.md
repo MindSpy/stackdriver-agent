@@ -6,16 +6,9 @@ Based on https://github.com/wikiwi/stackdriver-agent.
 
 Set params:
 ```
-uid=
-gid=
-user=
-
 image_name=stackdriver-agent
 image_ver=6.3.1
-
-registry_repository=
-
-tmp_dir=
+registry_repository=mindspy
 gapp_cred=
 ```
 
