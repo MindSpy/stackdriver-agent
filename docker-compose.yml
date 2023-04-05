@@ -1,0 +1,44 @@
+version: "2.2"
+
+
+services:
+  stackdrive-agent:
+    #user: ${uid}:${gid}
+    image: ${registry_repository}/${image_name}:${image_ver}
+    container_name: stackdriver-agent
+    mem_limit: 250m
+    mem_reservation: 150m
+    security_opt:
+       - apparmor=unconfined
+    cap_add:
+       - SYS_PTRACE
+       - SYS_ADMIN
+       - NET_ADMIN
+    pid: host
+    group_add:
+       - sudo
+    entrypoint:
+       - /entrypoint.sh
+    environment:
+       - SSH_AUTH_SOCK
+       - SSH_TTY
+       - SSH_CLIENT
+       - SSH_CONNECTION
+       - GOOGLE_APPLICATION_CREDENTIALS=${gapp_cred}
+
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - uid
+        - gid
+        - user
+        - image_ver
+        - docker_gid
+    restart: unless-stopped
+    volumes:
+        - ${tmp_dir}:/opt/tmp
+    #  - ${host_home}:/home
+    #  - /var/run/docker.sock:/var/run/docker.sock
+    #  - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    #  - /etc/bash/bashrc:/etc/bash.bashrc
