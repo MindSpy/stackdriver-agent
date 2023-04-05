@@ -16,10 +16,6 @@ services:
       entrypoint:
          - /entrypoint.sh
       environment:
-         - SSH_AUTH_SOCK
-         - SSH_TTY
-         - SSH_CLIENT
-         - SSH_CONNECTION
          - GOOGLE_APPLICATION_CREDENTIALS=${gapp_cred}
       restart: unless-stopped
       volumes:
